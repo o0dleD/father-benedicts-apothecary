@@ -89,13 +89,25 @@
     </button>
   </div>
 
-  <script>
-    if (window.netlifyIdentity) {
-      netlifyIdentity.on("login", () => {
-        window.location.href = "/Pages/index.html";
-      });
-    }
-  </script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  // Initialize Netlify Identity
+  if (window.netlifyIdentity) {
+    netlifyIdentity.init();
+
+    // Redirect after successful login
+    netlifyIdentity.on("login", () => {
+      window.location.href = "/Pages/index.html";
+    });
+
+    // Hide the Sign up button in the widget
+    netlifyIdentity.on('init', user => {
+      const signUpButtons = document.querySelectorAll('.netlify-identity-widget .signup');
+      signUpButtons.forEach(btn => btn.style.display = 'none');
+    });
+  }
+</script>
+
 
 </body>
 </html>
