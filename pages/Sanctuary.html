@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Sanctuary</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/sanctum.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/sanctuary.png" alt="Sanctuary" class="room-bg">
+
+  <div class="hotspot" style="top:73%; left:50%;" onclick="showPopup('SunlitNavePopup', this)"></div>
+  <div class="hotspot" style="top:52%; left:42%;" onclick="showPopup('WildflowersPopup', this)"></div>
+  <div class="hotspot" style="top:69%; left:15%;" onclick="showPopup('PewPopup', this)"></div>
+  <div class="hotspot" style="top:49%; left:57%;" onclick="showPopup('CandlePopup', this)"></div>
+
+<!-- Popups -->
+<div id="SunlitNavePopup" class="popup">
+  <h2>Sunlit Nave</h2>
+  <p><em>Light asks nothing, yet gives form to everything.</em></p>
+  <p><strong>Aroma:</strong> Pale sunlight, clean air, warmed stone.</p>
+  <p><strong>Notes:</strong> Elemi, Bergamot, Vetiver, and Angelica Root.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="WildflowersPopup" class="popup">
+  <h2>Altar Adorned with Wildflowers</h2>
+  <p><em>Even in stillness, life leans toward light.</em></p>
+  <p><strong>Aroma:</strong> Tender florals, pollen, meadow breeze.</p>
+  <p><strong>Notes:</strong> Chamomile, Mimosa, Citrus Flowers, and Petitgrain.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="PewPopup" class="popup">
+  <h2>Polished Wooden Pews</h2>
+  <p><em>Seats worn smooth by waiting.</em></p>
+  <p><strong>Aroma:</strong> Old oak, dust, soft sweetness.</p>
+  <p><strong>Notes:</strong> Oakwood, Cedarwood, Benzoin, and Hay.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="CandlePopup" class="popup">
+  <h2>Beeswax Candle</h2>
+  <p><em>A flame keeps watch without speaking.</em></p>
+  <p><strong>Aroma:</strong> Beeswax, faint smoke, warm air held close.</p>
+  <p><strong>Notes:</strong> Beeswax, Frankincense, Elemi, and Cade.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Sanctuary</h1>
+    <p>A hall of stillness and soft light, where shadows rest and breath slows. Step within, pause, and let the Sanctuary settle your spirit.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

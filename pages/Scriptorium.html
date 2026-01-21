@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Scriptorium</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/scriptorium.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/scriptorium.png" alt="Scriptorium" class="room-bg">
+
+<div class="hotspot" style="top:65%; left:47%;" onclick="showPopup('ManuscriptPopup', this)"></div>
+<div class="hotspot" style="top:48%; left:30%;" onclick="showPopup('InkwellPopup', this)"></div>
+<div class="hotspot" style="top:23%; left:47%;" onclick="showPopup('OilLampPopup', this)"></div>
+<div class="hotspot" style="top:39%; left:81%;" onclick="showPopup('HerbariumPopup', this)"></div>
+
+<!-- Popups -->
+<div id="ManuscriptPopup" class="popup">
+  <h2>Leather-bound Manuscript</h2>
+  <p><em>Ink carries the weight of unspoken hours.</em></p>
+  <p><strong>Aroma:</strong> Aged paper, leather, faint ink, dusty shelves.</p>
+  <p><strong>Notes:</strong> Oakmoss, Benzoin, and Labdanum.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="InkwellPopup" class="popup">
+  <h2>Inkwell and Pens</h2>
+  <p><em>Patience is the true nib that shapes the line.</em></p>
+  <p><strong>Aroma:</strong> Metallic tang, oak-gall ink, faint violet-like top note from the ink.</p>
+  <p><strong>Notes:</strong> Black Pepper, Oakmoss, Violet Leaf, and Patchouli.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="OilLampPopup" class="popup">
+  <h2>Beeswax Candles</h2>
+  <p><em>A small flame keeps the vast night at bay.</em></p>
+  <p><strong>Aroma:</strong> Warm beeswax, heated brass, soft smoky veil.</p>
+  <p><strong>Notes:</strong> Beeswax, Cade, Labdanum, and Elemi.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="HerbariumPopup" class="popup">
+  <h2>Herbarium Press</h2>
+  <p><em>Even pressed flat, a leaf remembers sunlight.</em></p>
+  <p><strong>Aroma:</strong> Dry hay, dusty herbs, vetiver-like roots.</p>
+  <p><strong>Notes:</strong> Vetiver, Hay, Rosemary, and Oakmoss.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Scriptorium</h1>
+    <p>Candles flicker on desks lined with parchment, quills poised in anticipation. Move among manuscripts, inkpots, and the whispered echoes of thought, and let the Scriptorium stir your imagination.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

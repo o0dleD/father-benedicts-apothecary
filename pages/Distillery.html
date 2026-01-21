@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Distillery</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/Distillery.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/Distillery.png" alt="Distillery" class="room-bg">
+  
+  <div class="hotspot" style="top:62%; left:20%;" onclick="showPopup('StillPopup', this)"></div>
+  <div class="hotspot" style="top:34%; left:60%;" onclick="showPopup('HerbsPopup', this)"></div>
+  <div class="hotspot" style="top:60%; left:65%;" onclick="showPopup('TablePopup', this)"></div>
+  <div class="hotspot" style="top:40%; left:18%;" onclick="showPopup('ShelvesPopup', this)"></div>
+
+<!-- Popups -->
+<div id="StillPopup" class="popup">
+  <h2>Copper Still</h2>
+  <p><em>Patience is distilled in the copper’s curve; the simplest leaf may hold eternity.</em></p>
+  <p><strong>Aroma:</strong> Warm, herbal, subtly metallic.</p>
+  <p><strong>Notes:</strong> Rosemary, Basil, Thyme, and Sage.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="HerbsPopup" class="popup">
+  <h2>Drying Herbs</h2>
+  <p><em>What hangs in shadow is not lost; suspended leaves speak in whispers of scent.</em></p>
+  <p><strong>Aroma:</strong> Aromatic, slightly dried, fragrant green.</p>
+  <p><strong>Notes:</strong> Lavender, Clary Sage, Chamomile, and Marjoram.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="TablePopup" class="popup">
+  <h2>Infusions Table</h2>
+  <p><em>The art of infusion teaches that time and gentle touch unlock the hidden soul of matter.</em></p>
+  <p><strong>Aroma:</strong> Soft, sweetly herbal, subtle floral undertones.</p>
+  <p><strong>Notes:</strong> Lemon Balm, Neroli, Peppermint, and Chamomile.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="ShelvesPopup" class="popup">
+  <h2>Storage Jars</h2>
+  <p><em>What is stored carefully holds promise; patience preserves both scent and spirit.</em></p>
+  <p><strong>Aroma:</strong> Earthy, resinous, dry, quietly warming.</p>
+  <p><strong>Notes:</strong> Patchouli, Sandalwood, Cedarwood, and Bay.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Distillery</h1>
+    <p>Within the warm hush of the Still Room, shelves of herbs and resins catch the light, and copper alembics gleam softly. Steam rises from simmering infusions, and the scent of leaves and blossoms fills the air. Explore slowly, and let the Still Room reveal the quiet alchemy of patience and care.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

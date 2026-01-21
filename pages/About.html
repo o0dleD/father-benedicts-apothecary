@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&family=Cormorant:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary - About</title>
+
+<style>
+/* ---- Background parchment image ---- */
+html {
+  height: 100%;
+  background-image: url("../Backgrnd_img/Mattioli.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -3;
+}
+
+/* ---- Fixed faded white overlay BEHIND content ---- */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255,255,255,0.8);
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* ---- Full-page fade overlay (black) ---- */
+#fade-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 1.5s ease;
+}
+#fade-overlay.fade-out {
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+/* ---- Main content ---- */
+body {
+  font-family: 'IM Fell English', 'Apple Chancery', 'Cormorant', serif;
+  font-style: italic; 
+  margin: 0;
+  color: #272522;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---- Navigation ribbon ---- */
+.nav-ribbon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px; 
+  background: rgba(40, 40, 40, 0.9);
+  text-align: center;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.nav-ribbon a {
+  text-decoration: none;
+  font-family: 'IM Fell English', 'Apple Chancery', cursive;
+  font-style: italic;
+  font-size: 1.2em;
+  color: #f2efe8;           /* warm parchment-white */
+  position: relative;        /* for underline pseudo-element */
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-ribbon a:hover {
+  opacity: 1;
+  border-bottom: 2px solid gold;
+}
+
+.nav-ribbon a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;              /* small gap below text */
+  width: 0;
+  height: 2px;
+  background: #d4af37;
+  transition: width 0.3s ease;
+}
+
+.nav-ribbon a:hover {
+  color: #ffffff;            /* bright white on hover */
+}
+
+.nav-ribbon a:hover::after {
+  width: 100%;               /* subtle gold underline */
+}
+
+/* ---- Sticky Intro (homepage style) ---- */
+.intro {
+  position: sticky;
+  top: 48px; /* sits under ribbon */
+  z-index: 999;
+  width: 100%;
+}
+
+.intro-inner {
+  position: relative;
+  background: rgba(255,255,255,0.8);
+  padding: 2rem 1rem; /* taller for multiple lines */
+  border-bottom: 1px solid #eae7df;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.intro-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../Backgrnd_img/Mattioli.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.15;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.intro-inner h1,
+.intro-inner p {
+  font-family: 'IM Fell English', 'Apple Chancery', serif;
+  font-style: italic;
+  position: relative;
+  z-index: 2;
+  margin: 0.2rem 0;
+  color: #272522;
+}
+
+/* ---- Scrollable content ---- */
+.grid-overlay {
+  background: transparent;
+  padding: 4rem 1rem 1rem 1rem;
+  min-height: calc(100vh - 48px - 120px); /* account for ribbon + intro height */
+  z-index: 3;
+  position: relative;
+}
+
+/* ---- Grid layout ---- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  z-index: 4;
+}
+
+/* ---- Room container for captions ---- */
+.room-container {
+  text-align: center;
+  margin-bottom: 2rem; /* adds space below each container */
+}
+
+/* ---- Room tile ---- */
+.mood-item {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-width: 360px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  opacity: 0;              
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.mood-item.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mood-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(60%);
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.mood-item:hover img {
+  transform: scale(1.08);
+  filter: brightness(100%);
+}
+
+/* ---- Faded cover on idle ---- */
+.mood-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.5);
+  z-index: 1;
+  transition: opacity 0.35s ease;
+}
+
+.mood-item:hover::before {
+  opacity: 0;
+}
+
+/* ---- Text overlays with soft edges ---- */
+.room-name,
+.mood-hint {
+  font-style: italic;
+  letter-spacing: 0.2px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 6px 0;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Top text bar */
+.room-name {
+  margin-top: 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2e2a24;
+  text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.15);
+  position: static;
+  background: none;
+}
+
+/* Bottom text bar */
+.mood-hint {
+  bottom: -100%;
+  font-size: 1rem;
+  font-style: italic;
+  color: #3a3328;
+  background: linear-gradient(to top, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+  transition: bottom 0.3s ease;
+  text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.15);
+}
+
+.mood-hint::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.5);
+  z-index: -1;
+}
+
+.mood-item:hover .mood-hint {
+  bottom: 0;
+}
+
+/* ---- Caption under each thumbnail ---- */
+.room-caption {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #3a3328;
+}
+
+.father-benedict-heading {
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #8a6f2d; /* optional, matches your gold/earthy theme */
+}
+
+.credits {
+  padding: 1rem;
+  margin: 0;
+  text-align: center;   /* ← add this */
+}
+
+.credits2 {
+  padding: 1rem;
+  margin: 0;
+     /* ← add this */
+}
+
+.footer {
+  padding: 1rem;
+  margin: 0;
+  text-align: center;   /* ← add this */
+}
+
+.about-image {
+  display: block;
+  max-width: 400px;   /* ← adjust this to taste: 200–350px */
+  width: 100%;
+  margin: 2rem auto;  /* centers it and adds breathing room */
+  border-radius: 8px; /* optional, softens it slightly */
+}
+
+</style>
+</head>
+<body>
+
+<!-- Full-page fade overlay -->
+<div id="fade-overlay"></div>
+
+
+
+<div class="page-content">
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="../pages/index.html">Home</a>
+  <a href="../pages/About.html">About</a>  
+  <a href="../pages/Apothecary.html">Apothecary</a>
+  <a href="../pages/Create.html">Create</a>
+</div>
+
+  <!-- Sticky Intro (homepage style) -->
+  <div class="intro">
+    <div class="intro-inner">
+      <h1>Father Benedict’s Apothecary</h1>
+      <p>Scents for the soul. Enter, explore, and breathe.</p>
+    </div>
+  </div>
+
+<div class="credits" style="padding: 2em; margin-top: 2rem;">
+
+  <!-- All your credits content here -->
+
+<h2 style="font-size:1.5rem; font-weight:bold; text-align:center; margin-top:0.3rem; margin-bottom:1rem;">
+  A Word from Father Benedict
+</h2>
+
+<p>Welcome, seeker of quiet delight. Here in the Apothecary, every scent tells a story — a story of patience, of subtlety, and of moments noticed in passing. Take your time, breathe deeply, and let the accords guide you. There is no rush, no expectation, only the quiet alchemy of curiosity and care.</p>
+
+<p>Each blend you explore is a small act of attention to the world and to yourself. May your visit leave you a touch more mindful, a little more curious, and ever so gently enchanted.</p>
+
+  <p>
+  The sound recordings and musical excerpts used throughout the Monastery are drawn from public-domain and Creative Commons–licensed sources. Some recordings have been edited and otherwise adapted to serve the atmosphere of individual spaces.
+  </p>
+
+   <img src="../Backgrnd_img/External.png" alt="Abbey from outside" class="about-image"/>
+
+</div>
+<div class="credits2" style="padding: 2em; margin-top: 0;">
+  <h3>Sacred Music (Public Domain)</h3>
+  <ul>
+    <li><strong>Dies Irae</strong> — Gregorian chant — Public Domain  
+        Source: <a href="https://archive.org/details/GregorianChantMass" target="_blank">Internet Archive</a></li>
+    <li><strong>Kyrie</strong> — Gregorian chant — Public Domain  
+        Source: <a href="https://archive.org/details/GregorianChantMass" target="_blank">Internet Archive</a></li>
+    <li><strong>Sanctus</strong> — Sacred polyphony — Public Domain  
+        Source: <a href="https://archive.org/details/GregorianChantMass" target="_blank">Internet Archive</a></li>
+    <li><strong>Agnus Dei</strong> — Sacred polyphony — Public Domain  
+        Source: <a href="https://archive.org/details/GregorianChantMass" target="_blank">Internet Archive</a></li>
+  </ul>
+
+  <h3>Sound Effects & Ambient Recordings</h3>
+  <p>(Sourced from Freesound.org; recordings may appear in multiple rooms)</p>
+  <ul>
+    <li><strong>1800's Church Silent Prayer During Communion</strong> — composingatnight — 
+        <a href="https://freesound.org/people/composingatnight/sounds/697580/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>230809_2526_FR_Insects-twilight-pine-trees-forest.wav</strong> — kevp888 — 
+        <a href="https://freesound.org/people/kevp888/sounds/700734/" target="_blank">Freesound.org</a> — CC BY 4.0 (Attribution 4.0)</li>
+    <li><strong>AMB_Wind_Howling_empty Church close to window_48kHz.wav</strong> — Tonmeister88 — 
+        <a href="https://freesound.org/people/Tonmeister88/sounds/557380/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>birdsong, spring,English countryside</strong> — PHILBRICE — 
+        <a href="https://freesound.org/people/PHILBRICE/sounds/191830/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>Book_Turning_Pages_03.wav</strong> — moai15 — 
+        <a href="https://freesound.org/people/moai15/sounds/336372/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>BUBBLES_LOW.wav</strong> — sound_ahead — 
+        <a href="https://freesound.org/people/sound_ahead/sounds/567449/" target="_blank">Freesound.org</a> — CC BY 3.0 (Attribution 3.0)</li>
+    <li><strong>Buzzing Insect.wav</strong> — Deboche — 
+        <a href="https://freesound.org/people/Deboche/sounds/564499/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>Chateau By Night</strong> — nicotep — 
+        <a href="https://freesound.org/people/nicotep/sounds/803249/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>Cooking03</strong> — LudPos — 
+        <a href="https://freesound.org/people/LudPos/sounds/726914/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>Dawn chorus.wav</strong> — Synge101 — 
+        <a href="https://freesound.org/people/Synge101/sounds/611453/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>FOODCook_Grinding Spices In A Mortar And Pestle 01_JOSH_OWI 3RD YEAR SFX PACK_Scarlett 18i20, Samson C01.wav</strong> — jchiledred — 
+        <a href="https://freesound.org/people/jchiledred/sounds/538239/" target="_blank">Freesound.org</a> — CC BY 4.0 (Attribution 4.0)</li>
+    <li><strong>Forest snow falling and birds</strong> — xkeril — 
+        <a href="https://freesound.org/people/xkeril/sounds/673266/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>fountain04.wav</strong> — Adrian_Gomar — 
+        <a href="https://freesound.org/people/Adrian_Gomar/sounds/202913/" target="_blank">Freesound.org</a> — CC BY 3.0 (Attribution 3.0)</li>
+    <li><strong>GLASImpt_Glass Clink 01_KVV AUDIO_FREE</strong> — KVV_Audio — 
+        <a href="https://freesound.org/people/KVV_Audio/sounds/798151/" target="_blank">Freesound.org</a> — CC BY 4.0 (Attribution 4.0)</li>
+    <li><strong>glass clink.WAV</strong> — isaacburkevideo — 
+        <a href="https://freesound.org/people/isaacburkevideo/sounds/649345/" target="_blank">Freesound.org</a> — CC BY 4.0 (Attribution 4.0)</li>
+    <li><strong>Pen Paper.WAV</strong> — taure — 
+        <a href="https://freesound.org/people/taure/sounds/568436/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>stream gentle nearby.flac</strong> — kyles — 
+        <a href="https://freesound.org/people/kyles/sounds/637831/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>Sussex Woodland & Meadow Bird Sounds, Evening.MP3</strong> — Vonora — 
+        <a href="https://freesound.org/people/Vonora/sounds/269559/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>Tawny owl.wav</strong> — Elanor1995 — 
+        <a href="https://freesound.org/people/Elanor1995/sounds/688869/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>village Bokhoven NL 0940 AM 150405_0586</strong> — klankbeeld — 
+        <a href="https://freesound.org/people/klankbeeld/sounds/784148/" target="_blank">Freesound.org</a> — CC BY 4.0 (Attribution 4.0)</li>
+    <li><strong>Water Drips/drops</strong> — acmkyne — 
+        <a href="https://freesound.org/people/acmkyne/sounds/273331/" target="_blank">Freesound.org</a> — CC0 (Public Domain)</li>
+    <li><strong>winter lake birds NL DeNoise 170119_1080.wav</strong> — klankbeeld — 
+        <a href="https://freesound.org/people/klankbeeld/sounds/584423/" target="_blank">Freesound.org</a> — CC BY 4.0 (Attribution 4.0)</li>
+      </ul>
+
+  <h3>Visual Acknowledgements</h3>
+  <p>
+    Background images for rooms and spaces were generated using AI-based image tools, including 
+    <a href="https://stabledifffusion.com/tools/ai-image-generator" target="_blank">Stable Diffusion</a> 
+    and <a href="https://dreamstudio.ai/" target="_blank">DreamStudio</a>. Images may have been adapted for this project.
+  </p>
+
+  <h3>Legal Note</h3>
+  <p>
+    All third-party audio materials are used under their respective Creative Commons or public-domain licences. Where required, attribution is given. No affiliation or endorsement is implied.
+  </p>
+</div>
+    <!-- Additional content -->
+    <div class="extra-content">
+   <!--   <p>Additional content can go here; parchment remains softly visible beneath everything.</p> -->
+      <p class="footer">© 2026 Father Benedict’s Apothecary. All rights reserved.</p>
+    </div>
+
+
+<script>
+window.addEventListener('load', () => {
+  // Fade overlay out (from black)
+  const overlay = document.getElementById('fade-overlay');
+  overlay.classList.add('fade-out');
+  setTimeout(() => overlay.remove(), 1600);
+
+  // Fade in all mood-items sequentially
+  const items = document.querySelectorAll('.mood-item');
+  items.forEach((item, index) => {
+    setTimeout(() => item.classList.add('loaded'), index * 200);
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Cloister</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/cloister.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/cloister.png" alt="Cloister" class="room-bg">
+
+<div class="hotspot" style="top:45%; left:30%;" onclick="showPopup('NichePopup', this)"></div>
+<div class="hotspot" style="top:50%; left:64%;" onclick="showPopup('SunlitArchPopup', this)"></div>
+<div class="hotspot" style="top:60%; left:82%;" onclick="showPopup('GardenGlimpsePopup', this)"></div>
+<div class="hotspot" style="top:30%; left:45%;" onclick="showPopup('IncensePopup', this)"></div>
+
+<!-- Popups -->
+<div id="NichePopup" class="popup">
+  <h2>Mossy Stone Niche</h2>
+  <p><em>Life emerges even from the shade of quiet corners.</em></p>
+  <p><strong>Aroma:</strong> Soft moss, damp earth, faint mineral warmth.</p>
+  <p><strong>Notes:</strong> Oakmoss, Vetiver, Elemi, and Petitgrain.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="SunlitArchPopup" class="popup">
+  <h2>Sunlit Arch</h2>
+  <p><em>Shafts of warm light move slowly across the cool flagstones.</em></p>
+  <p><strong>Aroma:</strong> Warm stone, gentle sun-dusted air, subtle hints of distant blooms.</p>
+  <p><strong>Notes:</strong> Bergamot, Elemi, and Jasmine.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="GardenGlimpsePopup" class="popup">
+  <h2>Garden Glimpse</h2>
+  <p><em>Even from a distance, the garden tempts us to enter.</em></p>
+  <p><strong>Aroma:</strong> Fresh green edge, faint floral lift, softened by stone.</p>
+  <p><strong>Notes:</strong> Green leaves, Rosemary, Tangerine, and Petitgrain.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="IncensePopup" class="popup">
+  <h2>Air of Incense</h2>
+  <p><em>The air holds the subtle scent of distant worship.</em></p>
+  <p><strong>Aroma:</strong> Whisper of incense, soft warm stone, early-spring pollen hints.</p>
+  <p><strong>Notes:</strong> Frankincense, Cade, and Vetiver.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Cloister</h1>
+    <p>Soft afternoon sunlight filters through the arches, warming both stone and hidden stems. Walk the cloistered paths, pass between sun and shadow, and let the fragrant spring air calm your mind.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Observatory</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/observatory.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/observatory.png" alt="Observatory" class="room-bg">
+  
+<div class="hotspot" style="top:54%; left:47%;" onclick="showPopup('AstrolabePopup', this)"></div>
+<div class="hotspot" style="top:35%; left:30%;" onclick="showPopup('WindowPopup', this)"></div>
+<div class="hotspot" style="top:70%; left:55%;" onclick="showPopup('ChartsPopup', this)"></div>
+<div class="hotspot" style="top:55%; left:18%;" onclick="showPopup('LampPopup', this)"></div>
+
+<!-- Popups -->
+<div id="AstrolabePopup" class="popup">
+  <h2>Astrolabe</h2>
+  <p><em>Even metal dreams of the stars.</em></p>
+  <p><strong>Aroma:</strong> Cool brass, faint beeswax from polishing cloth.</p>
+  <p><strong>Notes:</strong> Elemi, Benzoin, Frankincense, and Oakmoss.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="WindowPopup" class="popup">
+  <h2>Night Air</h2>
+  <p><em>A deep breath and the universe expands.</em></p>
+  <p><strong>Aroma:</strong> Cold air, hint of pine, distant smoke.</p>
+  <p><strong>Notes:</strong> Pine, Eucalyptus, Cade, and Vetiver.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="ChartsPopup" class="popup">
+  <h2>Star Charts</h2>
+  <p><em>Constellations rest in quiet ink.</em></p>
+  <p><strong>Aroma:</strong> Aged paper, ink, subtle dryness.</p>
+  <p><strong>Notes:</strong> Labdanum, Oakmoss, Sage, and Benzoin.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="LampPopup" class="popup">
+  <h2>Beeswax Candles</h2>
+  <p><em>Illumination comes gently.</em></p>
+  <p><strong>Aroma:</strong> Warm oil, soft smoke, old timber.</p>
+  <p><strong>Notes:</strong> Beeswax, Elemi, Cedarwood, and Labdanum.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Observatory</h1>
+    <p>Beneath a sky strewn with stars, maps and charts await curious eyes. Wander among telescopes, candles, and constellations traced in vellum, and let the Observatory awaken your wonder.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

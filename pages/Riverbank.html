@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Riverbank</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/Riverbank.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/Riverbank.png" alt="Observatory" class="room-bg">
+  
+<div class="hotspot" style="top:54%; left:42%;" onclick="showPopup('WateredgePopup', this)"></div>
+<div class="hotspot" style="top:30%; left:75%;" onclick="showPopup('GrassPopup', this)"></div>
+<div class="hotspot" style="top:15%; left:43%;" onclick="showPopup('WillowsPopup', this)"></div>
+<div class="hotspot" style="top:28%; left:8%;" onclick="showPopup('DriftwoodPopup', this)"></div>
+
+<!-- Popups -->
+<div id="WateredgePopup" class="popup">
+  <h2>Water's Edge</h2>
+  <p><em>Still waters reveal what the heart has long known; even the quietest currents speak truth.</em></p>
+  <p><strong>Aroma:</strong> Fresh, mineral, cool, subtly green.</p>
+  <p><strong>Notes:</strong> Vetiver, Elemi, and Galbanum.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="GrassPopup" class="popup">
+  <h2>Sunlit Meadow</h2>
+  <p><em>The sun gilds even the humblest grass; attention turns the ordinary into a revelation.</em></p>
+  <p><strong>Aroma:</strong> Warm, sun-baked greenery, lightly floral.</p>
+  <p><strong>Notes:</strong> Lavender, Bergamot, Geranium, and Chamomile.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="WillowsPopup" class="popup">
+  <h2>Willow Trees</h2>
+  <p><em>Beneath the bending branches, one finds the patience to listen.</em></p>
+  <p><strong>Aroma:</strong> Freshly leafy, slightly balsamic, with a hint of earthiness.</p>
+  <p><strong>Notes:</strong> Petitgrain, Cypress, and Cedarwood.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="DriftwoodPopup" class="popup">
+  <h2>Fallen Branches</h2>
+  <p><em>Even that which falls nourishes the soil; decay is but a whisper of life renewed.</em></p>
+  <p><strong>Aroma:</strong> Woody, resinous, dry, lightly smoky.</p>
+  <p><strong>Notes:</strong> Guaiacwood, Birch Tar, Cade, and Frankincense.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Riverbank</h1>
+    <p>Along the gently flowing river, golden light warms the grasses and wildflowers at the water’s edge. Willow branches bend gracefully, and driftwood tells the story of seasons past. Pause here, listen to the water, and let the Riverbank guide your thoughts toward stillness and reflection.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Woodland</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/Woodland.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/Woodland.png" alt="Woodland" class="room-bg">
+  
+<div class="hotspot" style="top:72%; left:55%;" onclick="showPopup('GroundPopup', this)"></div>
+<div class="hotspot" style="top:20%; left:25%;" onclick="showPopup('SmokePopup', this)"></div>
+<div class="hotspot" style="top:28%; left:40%;" onclick="showPopup('BlossomPopup', this)"></div>
+<div class="hotspot" style="top:55%; left:70%;" onclick="showPopup('AnimalPopup', this)"></div>
+
+<!-- Popups -->
+<div id="GroundPopup" class="popup">
+  <h2>Oak & Mossy Ground</h2>
+  <p><em>Roots and moss keep secrets; tread lightly and they may reveal themselves.</em></p>
+  <p><strong>Aroma:</strong> Earthy, woody, damp, grounding.</p>
+  <p><strong>Notes:</strong> Oakwood, Vetiver, Oakmoss, and Patchouli.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="SmokePopup" class="popup">
+  <h2>Cherrywood Smoke</h2>
+  <p><em>Even the faintest trace of fire reminds us that transformation is constant.</em></p>
+  <p><strong>Aroma:</strong> Smoky, warm, woody, resinous.</p>
+  <p><strong>Notes:</strong> Cherrywood, Birch Tar, and Frankincense.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="BlossomPopup" class="popup">
+  <h2>Early Blossom Canopy</h2>
+  <p><em>Every blossom is a promise; the air itself becomes gentle in their presence.</em></p>
+  <p><strong>Aroma:</strong> Fresh, floral, airy, slightly sweet.</p>
+  <p><strong>Notes:</strong> Apple Blossom, Neroli, Linden Blossom, and Galbanum.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="AnimalPopup" class="popup">
+  <h2>Deer Path</h2>
+  <p><em>Even where creatures pass unseen, their presence lingers like a quiet hymn.</em></p>
+  <p><strong>Aroma:</strong> Softly earthy, hay-like, musky.</p>
+  <p><strong>Notes:</strong> Costus Root, Hay, Oakwood, and Musk.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>Woodland</h1>
+    <p>Among towering oaks and mossed earth, sunlight filters through a canopy of tender leaves. Blossoms drift on the breeze, and hidden paths hint at the presence of creatures unseen. Wander slowly, breathe deeply, and let the Woodland awaken a quiet wonder in the rhythms of spring.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&family=Cormorant:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary - Index</title>
+
+<style>
+/* ---- Background parchment image ---- */
+html {
+  height: 100%;
+  background-image: url("../Backgrnd_img/Mattioli.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -3;
+}
+
+/* ---- Fixed faded white overlay BEHIND content ---- */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255,255,255,0.8);
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* ---- Full-page fade overlay (black) ---- */
+#fade-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 1.5s ease;
+}
+#fade-overlay.fade-out {
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+/* ---- Main content ---- */
+body {
+  font-family: 'IM Fell English', 'Apple Chancery', 'Cormorant', serif;
+  font-style: italic; 
+  margin: 0;
+  color: #272522;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---- Navigation ribbon ---- */
+.nav-ribbon {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  height: 48px;
+  background: rgba(40,40,40,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  z-index: 3000;
+}
+.nav-ribbon a {
+  text-decoration: none;
+  font-family: 'IM Fell English', 'Apple Chancery', cursive;
+  font-style: italic;
+  font-size: 1.2em;
+  color: #f2efe8;           /* warm parchment-white */
+  position: relative;        /* for underline pseudo-element */
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-ribbon a:hover {
+  opacity: 1;
+  border-bottom: 2px solid gold;
+}
+
+.nav-ribbon a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;              /* small gap below text */
+  width: 0;
+  height: 2px;
+  background: #d4af37;
+  transition: width 0.3s ease;
+}
+
+.nav-ribbon a:hover {
+  color: #ffffff;            /* bright white on hover */
+}
+
+.nav-ribbon a:hover::after {
+  width: 100%;               /* subtle gold underline */
+}
+
+/* ---- Sticky Intro (homepage style) ---- */
+.intro {
+  position: sticky;
+  top: 48px; /* sits under ribbon */
+  z-index: 999;
+  width: 100%;
+}
+
+.intro-inner {
+  position: relative;
+  background: rgba(255,255,255,0.8);
+  padding: 2rem 1rem; /* taller for multiple lines */
+  border-bottom: 1px solid #eae7df;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.intro-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../Backgrnd_img/Mattioli.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.15;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.intro-inner h1,
+.intro-inner p {
+  position: relative;
+  z-index: 2;
+  margin: 0.2rem 0;
+  color: #272522;
+}
+
+/* ---- Scrollable content ---- */
+.grid-overlay {
+  background: transparent;
+  padding: 2rem 1rem 1rem 1rem;
+  min-height: calc(100vh - 48px - 120px); /* account for ribbon + intro height */
+  z-index: 3;
+  position: relative;
+}
+
+/* ---- Grid layout ---- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  z-index: 4;
+}
+
+/* ---- Room container for captions ---- */
+.room-container {
+  text-align: center;
+  margin-bottom: 2rem; /* adds space below each container */
+}
+
+/* ---- Room tile ---- */
+.mood-item {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-width: 360px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  opacity: 0;              
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.mood-item.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mood-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(60%);
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.mood-item:hover img {
+  transform: scale(1.08);
+  filter: brightness(100%);
+}
+
+/* ---- Faded cover on idle ---- */
+.mood-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.5);
+  z-index: 1;
+  transition: opacity 0.35s ease;
+}
+
+.mood-item:hover::before {
+  opacity: 0;
+}
+
+/* ---- Text overlays with soft edges ---- */
+.room-name,
+.mood-hint {
+  font-style: italic;
+  letter-spacing: 0.2px;
+  position: absolute;
+  left: 0; width: 100%;
+  text-align: center; z-index: 2;
+}
+
+
+/* Top text bar */
+.room-name {
+  margin-top: 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2e2a24;
+  text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.15);
+  position: static;
+  background: none;
+}
+
+/* Bottom text bar */
+.mood-hint {
+  bottom: -100%; font-size: 1rem;
+  background: linear-gradient(to top, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+  text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.15);
+  transition: bottom 0.3s ease;
+}
+
+.mood-item:hover .mood-hint {
+  bottom: 0;
+}
+
+/* ---- Caption under each thumbnail ---- */
+.room-caption {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #3a3328;
+}
+
+.credits {
+  padding: 1rem;
+  margin: 0;
+  text-align: center;   /* ← add this */
+}
+
+.footer {
+  padding: 1rem;
+  margin: 0;
+  text-align: center;   /* ← add this */
+}
+
+/* Responsive tweaks */
+@media (pointer: coarse) {
+  .mood-item { opacity: 1 !important; transform: none !important; }
+  .mood-item img { filter: brightness(100%) !important; transform: none !important; transition: none !important; }
+  .mood-item::before { opacity: 0 !important; }
+  .mood-item .mood-hint { bottom: 0 !important; opacity: 1 !important; transition: none !important; }
+  .grid-overlay { padding: 2rem 1rem 1rem 1rem !important; }
+}
+@media (max-width: 600px) { .grid { grid-template-columns: 1fr !important; gap: 1rem !important; justify-items: center !important; } .room-container { margin: 0.5rem 0 !important; width: 100% !important; max-width: 360px !important; } }
+@media (min-width: 601px) and (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem !important; justify-items: center !important; } }
+@media (pointer: coarse), (max-width: 600px) { .intro-inner { padding: 1rem 0.5rem; } .intro-inner h1 { font-size: 1.4rem; } .intro-inner p { font-size: 0.9rem; } .grid-overlay { padding-top: calc(1rem + 48px) !important; } }
+
+</style>
+</head>
+<body>
+
+<!-- Full-page fade overlay -->
+<div id="fade-overlay"></div>
+
+<div class="page-content">
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+  <!-- Sticky Intro (homepage style) -->
+  <div class="intro">
+    <div class="intro-inner">
+      <h1>Father Benedict’s Apothecary</h1>
+      <p>Scents for the soul. Enter, explore, and breathe.</p>
+    </div>
+  </div>
+
+  <div class="credits" style="padding: 4rem 1rem 0.5rem 1rem; margin: 0;">
+
+
+  <!-- All your credits content here -->
+
+<h2 style="font-size:1.5rem; font-weight:bold; text-align:center; margin-top:0.3rem; margin-bottom:0;">
+  Explore the Monastery 
+</h2>
+
+<p>
+      Step into a place of stillness and attention. Move between chambers, gardens, and cloisters, and let the sights, sounds, and imagined scents shape your visit.
+    </p>
+
+  </div>
+
+  <!-- Scrollable content -->
+  <div class="grid-overlay">
+    <!-- Room Grid -->
+    <div class="grid">
+
+      <div class="room-container">
+        <div class="mood-item" onclick="location.href='Elaboratorium.html'">
+          <img src="../Backgrnd_img/Elaboratorium.jpeg" alt="Elaboratorium">
+          <div class="mood-hint">Ambience: Vitality</div>
+        </div>
+        <div class="room-name">Elaboratorium</div>
+        <div class="room-caption">A place where scents invigorate the senses.</div>
+      </div>
+
+      <div class="room-container">
+        <div class="mood-item" onclick="location.href='Physic_garden.html'">
+          <img src="../Backgrnd_img/physic-garden.png" alt="Physic Garden">
+          <div class="mood-hint">Ambience: Inspiration</div>
+        </div>
+        <div class="room-name">Physic Garden</div>
+        <div class="room-caption">Step outward: the garden’s breath will always steady your own.</div>
+      </div>
+
+            <div class="room-container">
+        <div class="mood-item" onclick="location.href='Cloister.html'">
+          <img src="../Backgrnd_img/cloister.png" alt="Cloister">
+          <div class="mood-hint">Ambience: Contemplation</div>
+        </div>
+        <div class="room-name">Cloister</div>
+        <div class="room-caption">Walk in light, arches aglow with the warmth of a pale afternoon.</div>
+      </div>
+
+                  <div class="room-container">
+        <div class="mood-item" onclick="location.href='Scriptorium.html'">
+          <img src="../Backgrnd_img/scriptorium.png" alt="Scriptorium">
+          <div class="mood-hint">Ambience: Creativity</div>
+        </div>
+        <div class="room-name">Scriptorium</div>
+        <div class="room-caption">Ink and candle smoke mingle with the whisper of quills on parchment.</div>
+      </div>
+
+                              <div class="room-container">
+        <div class="mood-item" onclick="location.href='Woodland.html'">
+          <img src="../Backgrnd_img/Woodland.png" alt="Woodland">
+          <div class="mood-hint">Ambience: Ferality</div>
+        </div>
+        <div class="room-name">Woodland</div>
+        <div class="room-caption">Where the quiet earth and budding canopy whisper of life renewed.</div>
+      </div>
+
+                        <div class="room-container">
+        <div class="mood-item" onclick="location.href='Cellarium.html'">
+          <img src="../Backgrnd_img/cellar.png" alt="Cellar">
+          <div class="mood-hint">Ambience: Reverie</div>
+        </div>
+        <div class="room-name">Cellarium</div>
+        <div class="room-caption">Where earth’s bounty rests, tinctures and barrels keeping secrets.</div>
+      </div>
+
+                              <div class="room-container">
+        <div class="mood-item" onclick="location.href='Observatory.html'">
+          <img src="../Backgrnd_img/observatory.png" alt="Observatory">
+          <div class="mood-hint">Ambience: Wonder</div>
+        </div>
+        <div class="room-name">Observatory</div>
+        <div class="room-caption">Night unfurls above, stars traced on vellum by candlelight.</div>
+      </div>
+
+                                  <div class="room-container">
+        <div class="mood-item" onclick="location.href='Riverbank.html'">
+          <img src="../Backgrnd_img/Riverbank.png" alt="Riverbank">
+          <div class="mood-hint">Ambience: Flow</div>
+        </div>
+        <div class="room-name">Riverbank</div>
+        <div class="room-caption">The gentle flow of water mirrors the stillness within.</div>
+      </div>
+
+                                    <div class="room-container">
+        <div class="mood-item" onclick="location.href='Distillery.html'">
+          <img src="../Backgrnd_img/Distillery.png" alt="Distillery">
+          <div class="mood-hint">Ambience: Transformation</div>
+        </div>
+        <div class="room-name">Distillery</div>
+        <div class="room-caption">Herbs and glass vessels distill patience into fragrance.</div>
+      </div>
+
+                                          <div class="room-container">
+        <div class="mood-item" onclick="location.href='Sanctuary.html'">
+          <img src="../Backgrnd_img/sanctuary.png" alt="Sanctuary">
+          <div class="mood-hint">Ambience: Serenity</div>
+        </div>
+        <div class="room-name">Sanctuary</div>
+        <div class="room-caption">A quiet hall where stillness lingers, soft light tracing the walls.</div>
+      </div>
+
+                                                <div class="room-container">
+        <div class="mood-item" onclick="location.href='Orchard.html'">
+          <img src="../Backgrnd_img/Orchard.png" alt="Orchard">
+          <div class="mood-hint">Ambience: Abundance</div>
+        </div>
+        <div class="room-name">Orchard</div>
+        <div class="room-caption">Blossoms and fruit teach the sweetness of careful attention.</div>
+      </div>
+
+                                                <div class="room-container">
+        <div class="mood-item" onclick="location.href='Winter-cloister.html'">
+          <img src="../Backgrnd_img/Winter_cloister.png" alt="Winter Cloister">
+          <div class="mood-hint">Ambience: Tranquillity</div>
+        </div>
+        <div class="room-name">Winter Cloister</div>
+        <div class="room-caption">Snow drifts past frost-lined arches; light is sharp, the air still.</div>
+      </div>
+    </div>
+
+    <!-- Additional content -->
+    <div class="extra-content">
+   <!--   <p>Additional content can go here; parchment remains softly visible beneath everything.</p> -->
+      <p class="footer">© 2026 Father Benedict’s Apothecary. All rights reserved.</p>
+    </div>
+  </div> <!-- .grid-overlay -->
+
+</div> <!-- .page-content -->
+
+<script>
+window.addEventListener('load', () => {
+  // Fade overlay out (from black)
+  const overlay = document.getElementById('fade-overlay');
+  overlay.classList.add('fade-out');
+  setTimeout(() => overlay.remove(), 1600);
+
+  // Fade in all mood-items sequentially
+  const items = document.querySelectorAll('.mood-item');
+  items.forEach((item, index) => {
+    setTimeout(() => item.classList.add('loaded'), index * 200);
+  });
+});
+</script>
+
+</body>
+</html>

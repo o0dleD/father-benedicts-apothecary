@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary - Create</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&family=Cormorant:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Base layout */
+html {
+  height: 100%;
+  background-image: url("../Backgrnd_img/Mattioli.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top:0; left:0; width:100vw; height:100vh;
+  background: rgba(255,255,255,0.8);
+  z-index: -2;
+  pointer-events: none;
+}
+body {
+  font-family: 'IM Fell English', 'Cormorant', serif;
+  font-style: italic;
+  margin: 0;
+  color: #272522;
+  position: relative;
+  z-index: 2;
+}
+
+/* Sticky header */
+.nav-ribbon {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 48px;
+  background: rgba(40,40,40,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  z-index: 3000;
+}
+.nav-ribbon a {
+  text-decoration: none;
+  font-family: 'IM Fell English', cursive;
+  font-style: italic;
+  font-size: 1.2em;
+  color: #f2efe8;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.nav-ribbon a:hover { color: #fff; }
+.nav-ribbon a::after {
+  content:'';
+  position:absolute;
+  left:0; bottom:-3px;
+  width:0; height:2px;
+  background:#d4af37;
+  transition: width 0.3s ease;
+}
+.nav-ribbon a:hover::after { width:100%; }
+
+/* Bottom basket */
+.bottom-ribbon {
+  position: fixed; bottom: 0; left:0; width:100%; height:50px;
+  background: rgba(40,40,40,0.9);
+  display:flex; justify-content:center; align-items:center; z-index:3000;
+}
+.cart-container { display:flex; align-items:center; gap:8px; cursor:pointer; color:#f2efe8; font-weight:bold; }
+.cart-icon { width:24px; height:24px; }
+.cart-count { font-size:1rem; font-weight:bold; }
+
+/* Basket panel */
+#basket-panel {
+  position: fixed; bottom:50px; right:1rem; width:280px; max-height:300px;
+  padding:1rem; background: rgba(255,250,240,0.95);
+  border: 4px solid #d4af37; border-radius:12px;
+  font-family: 'IM Fell English', serif; box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  overflow-y:auto; z-index:5000; display:none;
+}
+#basket-items { list-style:none; padding-left:0; margin:0; }
+#basket-items li { display:flex; justify-content:space-between; margin-bottom:0.3rem; }
+.remove-btn { cursor:pointer; color:#d40000; font-weight:bold; border:none; background:none; }
+#basket-total { text-align:center; font-weight:bold; margin-top:0.5rem; }
+#checkout-btn { display:block; width:80%; margin:0.5rem auto 0 auto; padding:0.5rem;
+  background:#d4af37; color:#272522; font-weight:bold; border:none; border-radius:6px; cursor:pointer; }
+
+/* Intro */
+.intro { position:sticky; top:48px; width:100%; z-index:999; }
+.intro-inner {
+  position:relative; background: rgba(255,255,255,0.8); padding:2rem 1rem;
+  text-align:center; border-bottom:1px solid #eae7df; box-sizing:border-box;
+}
+.intro-inner::before {
+  content:""; position:absolute; inset:0;
+  background-image:url("../Backgrnd_img/Mattioli.png"); background-size:cover;
+  background-repeat:no-repeat; background-position:center; opacity:0.15; z-index:1; pointer-events:none;
+}
+.intro-inner h1, .intro-inner p { position:relative; z-index:2; margin:0.2rem 0; }
+
+/* Apothecary grid */
+.grid-overlay { padding:1rem 1rem 1rem 1rem; min-height:calc(100vh-48px-120px); z-index:3; position:relative; }
+.shop-intro { max-width:800px; margin:0 auto 0.5rem auto; text-align:center; font-style:italic; font-size:0.95rem; color:#2e2a24; }
+.shop-intro p { margin:0.6rem 0; }
+
+/* Section & collapsible styling */
+.section { margin-bottom:2rem; border:4px solid #d4af37; border-radius:12px; background: rgba(255,255,255,0.95); 
+overflow: hidden; /* ← THIS is the key */
+}
+
+.section-header {
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: center;
+
+  background: rgba(255,248,240,0.95); /* this is the colour of the headers (e.g. Opening accord) */
+  color: #8a6f2d;
+
+  border: 2px solid #d4af37;
+  border-radius: 8px;
+
+  transition: background-color 0.3s ease;
+  position: relative; /* for the chevron to sit inside */
+}
+
+.section-header:hover {
+  background: rgba(255,243,225,0.95); /* the headerx change colour when you hover over them */
+}
+
+/* Chevron in header, flips when section is open */
+.section-header::after {
+  content: "⌄"; /* down chevron */
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  font-size: 1rem;
+  color: #8a6f2d;
+  transition: transform 0.3s ease;
+}
+
+/* Flip chevron when parent section has .open */
+.section.open .section-header::after {
+  transform: translateY(-50%) rotate(180deg); /* up when open */
+}
+
+
+.section-content {
+  padding: 1rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  justify-items: center;
+  background: rgba(255,255,240,0.95); /* background expanded box colour */
+
+  /* collapse behaviour */
+  max-height: 0;
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+.section.open .section-content {
+  max-height: 1000px; /* safely larger than content */
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.mood-item { /* this is the accord box */
+  position: relative;
+  border: 4px solid #d4af37;
+  border-radius: 10px;
+  background: rgba(255, 248, 240, 0.95); /* colour of the accord boxes */
+  padding: 1rem;
+  margin: 0 auto;              /* grid handles spacing */
+  max-width: 420px;            /* ← EXACT match to Apothecary */
+  width: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center; 
+}
+
+.credits, .shop-intro {
+  text-align: center;  /* centers all text inside these containers */
+}
+
+.credits {
+  padding: 1rem;
+  margin: 0;
+  text-align: center;   /* ← add this */
+}
+
+.footer {
+  padding: 1rem;
+  margin: 0;
+  text-align: center;   /* ← add this */
+}
+
+.mood-item:hover { transform:scale(1.03); box-shadow:0 0 15px rgba(212,175,55,0.6); }
+.mood-name-inside { font-weight:600; font-size:1.1rem; margin-bottom:0.4rem; text-align:center; }
+.mood-text { font-size:0.9rem; margin-bottom:0.3rem; }
+.mood-inspired-by { font-size:0.8rem; margin-bottom:0.3rem; font-style:italic; }
+
+/* Responsive */
+@media (max-width:600px) { .section-content, .content { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Basket ribbon -->
+<div class="bottom-ribbon">
+  <div class="cart-container" onclick="toggleBasketPanel()">
+    <span>Basket</span>
+    <img src="images/cart.png" class="cart-icon">
+    <span class="cart-count">0</span>
+  </div>
+</div>
+
+<!-- Basket panel -->
+<div id="basket-panel">
+  <h3>Your Basket</h3>
+  <ul id="basket-items"></ul>
+  <div id="basket-total"></div>
+  <button id="checkout-btn" onclick="checkout()">Checkout</button>
+</div>
+
+<!-- Intro -->
+<div class="intro">
+  <div class="intro-inner">
+    <h1>Father Benedict’s Apothecary</h1>
+    <p>Scents for the soul. Enter, explore, and breathe.</p>
+  </div>
+</div>
+
+
+<div class="credits" style="padding: 1rem 1rem 2.5rem 1rem; margin: 0;">
+
+  <!-- All your credits content here -->
+
+<h2 style="font-size:1.5rem; font-weight:bold; text-align:center; margin-top:0.3rem; margin-bottom:1rem;">
+  Create a Unique Blend
+</h2>
+
+<p>
+      This page allows you to create your own signature scent using a curated
+      selection of Father Benedict’s holy accords.
+    </p>
+
+      <p>You may select up to <strong>eight</strong> accords, selecting at least one accord from each section: Top, Heart, Base. A total of five or six
+      accords is often the most harmonious choice.</p>
+      
+      <p>Each commission is bespoke: the selected accords form only the beginning of a longer process of balance, refinement, and quiet contemplation.
+    </p> 
+        <p>
+      A fixed donation to the monastery applies, reflecting the time required to bring the blend into true accord.
+    </p>
+  </div>
+
+
+  <!-- Top Accords -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Opening Accords</div>
+    <div class="section-content">
+
+      
+
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Whispered citrus
+  <div class="mood-text">Optimistic, clear, sunlit morning after rain</div></div>
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Whispered citrus
+  <div class="mood-text">Optimistic, clear, sunlit morning after rain</div></div>
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Fresh herbal accord
+  <div class="mood-text">Clarity, renewal, vitality</div></div>
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Green fruity accord
+  <div class="mood-text">Freshness, natural vibrancy</div></div>
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Citrus herb accord
+  <div class="mood-text">Brightness, vitality, Mediterranean sunshine</div></div>
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Fresh herbal accord
+  <div class="mood-text">tender warmth</div></div>
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Fresh herbal accord
+  <div class="mood-text">tender warmth</div></div>
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Fresh herbal accord
+  <div class="mood-text">tender warmth</div></div>
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Whispered citrus
+  <div class="mood-text">Optimistic, clear, sunlit morning after rain</div></div>
+<div class="mood-item" data-section="top" onclick="addToBasket(this)">Verdant citrus top
+  <div class="mood-text">Optimistic, clear, sunlit morning after rain</div></div>
+
+
+
+
+    </div>
+  </div>
+
+  <!-- Heart Accords -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Heart Accords</div>
+    <div class="section-content">
+    
+    <div class="mood-item" data-section="heart" onclick="addToBasket(this)">Ambassador's Tea accord
+  <div class="mood-text">Intellectual warmth; afternoon calm in a paneled study.</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Benedict's Tea accord
+  <div class="mood-text">Early morning cool & still air, scented with herbs and stone.</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Floral citrus accord
+  <div class="mood-text">Romance, lightness, joyful elegance</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Floral medicinal accord
+  <div class="mood-text">Calm, contemplation, subtle mystery</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Floral mist & resin accord (Heart / Modifier)
+  <div class="mood-text">Ethereal, contemplative, luminous</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Soft floral accord
+  <div class="mood-text">Softness, subtlety, gentle green charm</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Spring Heart (Floral-Resinous Core)
+  <div class="mood-text">Contemplative forest clearing, sunlight through leaves</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Earthy green accord
+  <div class="mood-text">Groundedness, nature, depth</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">English Canopy
+  <div class="mood-text">mood tbc</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Tobacco-herbal
+  <div class="mood-text">warm, grounded, cozy, slightly mysterious, comforting depth</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Soft green citrus
+  <div class="mood-text">crisp, airy, uplifting, elegant, calmly energetic</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Furniture polish accord
+  <div class="mood-text">Comfort, tactility, lived in charm</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Fresh herbal accord
+  <div class="mood-text">Uplifting, clean, clear, optimistic</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Spicy wild card accord
+  <div class="mood-text">Intrigue, warmth, unexpected turns</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Old books accord
+  <div class="mood-text">Nostalgia, intellect, quiet refinement</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Soft vanilla accord
+  <div class="mood-text">Warmth, comfort, subtle sweetness</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Powdery original accord
+  <div class="mood-text">Romance, classical elegance, subtle complexity</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">Bluebell Wood
+  <div class="mood-text">Airy, subtly floral spring woodland. Bluebell-like green clarity.</div></div>
+<div class="mood-item" data-section="heart" onclick="addToBasket(this)">English Forest Accord
+  <div class="mood-text">A balanced, atmospheric woodland accord.</div></div>
+      
+    </div>
+  </div>
+
+  <!-- Base Accords -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Base Accords</div>
+    <div class="section-content">
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Ambered leatherwood accord (Heart / Base Modifier)
+      <div class="mood-text">Warm, grounded, contemplative, slightly exotic</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Gentle herbal base accord
+      <div class="mood-text">Comfort, subtle sophistication</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Moorland
+      <div class="mood-text">tbc</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Woodland Floor Accord
+      <div class="mood-text">Greenery, moss, humus, cool humidity.</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Powdery modern accord
+      <div class="mood-text">Sophistication, luxury, refined femininity</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Wooded breeze accord (Top / Heart Modifier)
+      <div class="mood-text">Refreshing, invigorating, calm clarity; a sense of open forest air</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Woody base (Eternal spring core base)
+      <div class="mood-text">Warm earth, polished wood, calm strength</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Antique hardwood accord
+      <div class="mood-text">Refinement, timelessness, craftsmanship</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Earthy woody accord
+      <div class="mood-text">Grounding, richness, depth</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Forest Hearth
+      <div class="mood-text">Warm evening woodsmoke, resin sweetness, woodland at dusk.</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Ancient Beechwood
+      <div class="mood-text">Fresh, airy, subtly floral woodland in spring. Green clarity.</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Rainstorm Forest
+      <div class="mood-text">Soil after rain, moss, cool humidity.</div></div>
+    <div class="mood-item" data-section="base" onclick="addToBasket(this)">Old Oak and Smoke accord
+      <div class="mood-text">Oak, faint smoke, lignin sweetness, tannic dryness</div></div>
+  </div>
+</div>
+
+</div>
+
+    <!-- Additional content -->
+    <div class="extra-content">
+   <!--   <p>Additional content can go here; parchment remains softly visible beneath everything.</p> -->
+      <p class="footer">© 2026 Father Benedict’s Apothecary. All rights reserved.</p>
+    </div>
+    
+<script>
+let basket = [];
+const cartCountEl = document.querySelector('.cart-count');
+const basketPanel = document.getElementById('basket-panel');
+const basketItemsEl = document.getElementById('basket-items');
+const basketTotalEl = document.getElementById('basket-total');
+
+function addToBasket(el) {
+  const name = el.textContent.trim().split("\n")[0];
+  const section = el.dataset.section;
+  if(basket.some(i => i.name === name)) return; // no duplicates
+  if(basket.length >= 8) { alert("Maximum 8 accords."); return; }
+  basket.push({name, section});
+  updateBasketUI();
+}
+
+function removeFromBasket(name) {
+  basket = basket.filter(i => i.name !== name);
+  updateBasketUI();
+}
+
+function updateBasketUI() {
+  basketItemsEl.innerHTML = '';
+  basket.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item.name;
+    const btn = document.createElement('button');
+    btn.textContent = '×';
+    btn.className = 'remove-btn';
+    btn.onclick = e => { e.stopPropagation(); removeFromBasket(item.name); };
+    li.appendChild(btn);
+    basketItemsEl.appendChild(li);
+  });
+  cartCountEl.textContent = basket.length;
+}
+
+function toggleBasketPanel() {
+  basketPanel.style.display = basketPanel.style.display==='block'?'none':'block';
+}
+
+function checkout() {
+  const sections = { top:0, heart:0, base:0 };
+  basket.forEach(i => sections[i.section]++);
+  if(basket.length < 3) { alert("Please select at least 3 accords."); return; }
+  if(sections.top<1 || sections.heart<1 || sections.base<1) {
+    alert("Please select at least one accord from each section."); return;
+  }
+  alert("Checkout ready! Basket: " + basket.map(i=>i.name).join(", "));
+  console.log("Basket:", basket);
+}
+
+function toggleSection(header) {
+  const section = header.closest('.section');
+  section.classList.toggle('open');
+}
+
+// Load saved basket
+window.addEventListener('load', ()=>{
+  basket = [];
+  updateBasketUI();
+});
+
+</script>
+
+</body>
+</html>

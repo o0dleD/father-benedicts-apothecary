@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Orchard</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/orchard.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/Orchard.png" alt="Orchard" class="room-bg">
+  
+<div class="hotspot" style="top:44%; left:60%;" onclick="showPopup('BlossomPopup', this)"></div>
+<div class="hotspot" style="top:35%; left:30%;" onclick="showPopup('FruitPopup', this)"></div>
+<div class="hotspot" style="top:70%; left:30%;" onclick="showPopup('WildFlowersPopup', this)"></div>
+<div class="hotspot" style="top:70%; left:55%;" onclick="showPopup('PathPopup', this)"></div>
+
+<!-- Popups -->
+<div id="BlossomPopup" class="popup">
+  <h2>Blossom Canopy</h2>
+  <p><em>Every blossom opens with courage; the eye that sees it, too, is renewed.</em></p>
+  <p><strong>Aroma:</strong> Lightly sweet, floral, airy.</p>
+  <p><strong>Notes:</strong> Apple Blossom, Pear Blossom, and Linden Blossom.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="FruitPopup" class="popup">
+  <h2>Fruitful Branches</h2>
+  <p><em>The fruit is earned by the patient climb; ripeness is measured in calm observation.</em></p>
+  <p><strong>Aroma:</strong> Juicy, fresh, lightly tart, sun-warmed.</p>
+  <p><strong>Notes:</strong> Bergamot, Orange, Lemon, and Green Apple.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="WildFlowersPopup" class="popup">
+  <h2>Grass & Wildflowers</h2>
+  <p><em>Even at the orchard’s feet, miracles flourish quietly; notice them, and they bloom twice.</em></p>
+  <p><strong>Aroma:</strong> Herbaceous, lightly sweet, green.</p>
+  <p><strong>Notes:</strong> Clary Sage, Chamomile, Elemi, and Sweet Grass.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="PathPopup" class="popup">
+  <h2>Worn Stone Path</h2>
+  <p><em>Where many have walked, the earth remembers; worn stones hold the whispers of time.</em></p>
+  <p><strong>Aroma:</strong> Dry, mineral, slightly mossy, grounding.</p>
+  <p><strong>Notes:</strong> Oakmoss, Vetiver, Patchouli, and Elemi.</p> 
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Orchard</h1>
+    <p>Rows of fruit trees stretch beneath a sunlit sky, blossoms mingling with ripening apples and pears. Grass and wildflowers sway in a gentle breeze, and a worn stone path winds among the trees. Stroll here, notice each bloom and fruit, and let the Orchard awaken your senses to the sweetness of careful attention.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

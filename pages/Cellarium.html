@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Cellarium</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+<!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/cellarium.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/cellar.png" alt="Cellarium" class="room-bg">
+
+<div class="hotspot" style="top:50%; left:20%;" onclick="showPopup('JarsPopup', this)"></div>
+<div class="hotspot" style="top:50%; left:55%;" onclick="showPopup('ResinPopup', this)"></div>
+<div class="hotspot" style="top:55%; left:75%;" onclick="showPopup('HerbsPopup', this)"></div>
+<div class="hotspot" style="top:70%; left:25%;" onclick="showPopup('BarrelsPopup', this)"></div>
+
+<!-- Popups -->
+<div id="JarsPopup" class="popup">
+  <h2>Jars of Citrus</h2>
+  <p><em>What the sun once warmed, stone now preserves.</em></p>
+  <p><strong>Aroma:</strong> Bitter orange peel, citrus flowers, herbal dryness.</p>
+  <p><strong>Notes:</strong> Bitter Orange, Neroli, Petitgrain, and Bergamot.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="ResinPopup" class="popup">
+  <h2>Jars of Aromatic Resins</h2>
+  <p><em>Resin is time made fragrant.</em></p>
+  <p><strong>Aroma:</strong> Cool resin, lemony olibanum, faint incense.</p>
+  <p><strong>Notes:</strong> Frankincense, Myrrh, Elemi, and Labdanum.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="HerbsPopup" class="popup">
+  <h2>Dried Herbs</h2>
+  <p><em>In stillness, every scent becomes precise.</em></p>
+  <p><strong>Aroma:</strong> Dusty green herbs, camphor edge, cellar chill.</p>
+  <p><strong>Notes:</strong> Sage, Thyme, Hyssop, and Vetiver.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="BarrelsPopup" class="popup">
+  <h2>Barrels of Ale</h2>
+  <p><em>Transformation begins in darkness.</em></p>
+  <p><strong>Aroma:</strong> Soft acetic tang, oak barrel, faint fruit.</p>
+  <p><strong>Notes:</strong> Oakwood, Bitter Orange, Patchouli, and Elemi.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Cellarium</h1>
+    <p>A hushed chamber of preservation, where amber-hued tinctures rest alongside barrels of ale and honeyed stores. Step softly among ancient jars and casks, and let the quiet patience of the Cellarium unfold your thoughts.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

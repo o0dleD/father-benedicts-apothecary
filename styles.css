@@ -1,0 +1,186 @@
+/* -------------------
+   General Page Styles
+   ------------------- */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Georgia', serif;
+    background-color: black; /* ensures fade starts from black */
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.loaded {
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+body.fade-out {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+svg {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1; /* makes sure it sits below overlays */
+    opacity: 1;
+    animation: fadeInSVG 1s ease forwards;
+}
+
+@keyframes fadeInSVG {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* -------------------
+   Navigation Ribbon
+   ------------------- */
+.nav-ribbon {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 248, 230, 0.9);
+    padding: 10px 20px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    z-index: 10000;
+    box-sizing: border-box;
+}
+
+.nav-ribbon a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-ribbon a::after {
+    content: "";
+    display: block;
+    height: 2px;
+    background: #a00;
+    width: 0;
+    transition: width 0.3s ease;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+}
+
+.nav-ribbon a:hover {
+    color: #a00;
+}
+
+.nav-ribbon a:hover::after {
+    width: 100%;
+}
+
+/* -------------------
+   Overlay / Scroll
+   ------------------- */
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+.overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.scroll {
+    background: #fdf5e6;
+    border: 8px solid #d4af37;
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    animation: fadeIn 1s ease;
+}
+
+.scroll h1 {
+    margin-top: 0;
+    font-size: 2em;
+    color: #5b3a29;
+}
+
+.scroll p {
+    font-size: 1.2em;
+    margin: 20px 0;
+    color: #3b2d1f;
+}
+
+/* Enter Button */
+.enter-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: #5b3a29;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    border-radius: 5px;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+.enter-btn:hover {
+    background: #7a503a;
+}
+
+/* Close button for overlays */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: radial-gradient(circle at center, #d4af37 0%, #c2972a 100%);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  line-height: 38px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3), inset 0 0 5px rgba(255,255,255,0.3);
+  z-index: 1001;
+}
+
+.close-btn:hover {
+    background: radial-gradient(circle at center, #c2972a 0%, #a17f1e 100%);
+    transform: scale(1.1);
+}
+
+/* -------------------
+   Animations
+   ------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}

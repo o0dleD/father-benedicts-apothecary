@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Elaboratorium</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/elaboratorium.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/Elaboratorium.jpeg" alt="Elaboratorium" class="room-bg">
+
+  <div class="hotspot" style="top:40%; left:50%;" onclick="showPopup('gardenPopup', this)"></div>
+  <div class="hotspot" style="top:65%; left:55%;" onclick="showPopup('tablePopup', this)"></div>
+  <div class="hotspot" style="top:35%; left:95%;" onclick="showPopup('shelvesPopup', this)"></div>
+  <div class="hotspot" style="top:55%; left:5%;" onclick="showPopup('sideboardPopup', this)"></div>
+
+  <!-- Popups -->
+  <div id="tablePopup" class="popup">
+    <h2>Tincturer's Table</h2>
+    <p><em>Knowledge does not only come from books; it also forms in the steam of a draught.</em></p>
+    <p><strong>Aroma:</strong> Fresh herbs brightened by citrus, deepened with gentle resins.</p>
+    <p><strong>Notes:</strong> Melissa, Lemon Verbena, Basil, and Petitgrain.</p>
+    <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+  </div>
+
+  <div id="shelvesPopup" class="popup">
+    <h2>Materia Botanica</h2>
+    <p><em>The pages hold more knowledge than any one of us could learn in a lifetime.</em></p>
+    <p><strong>Aroma:</strong> Leather, dust, faint floral dryness.</p>
+    <p><strong>Notes:</strong> Labdanum, Oakmoss, Iris, and Chamomile.</p>
+    <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+  </div>
+
+  <div id="gardenPopup" class="popup">
+    <h2>Physic Garden</h2>
+    <p><em>Step outward: breathe deeply and let the herbs' sweet scent calm your busy mind.</em></p>
+    <p><strong>Aroma:</strong> Lavender, green freshness, cool stone warmed by sun.</p>
+    <p><strong>Notes:</strong> Lavender, Elemi, Vetiver, and Petitgrain.</p>
+    <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+  </div>
+
+  <div id="sideboardPopup" class="popup">
+    <h2>Physic Sideboard</h2>
+    <p><em>Every leaf lives twice: once in the garden, once in the soul.</em></p>
+    <p><strong>Aroma:</strong> Dry herbs, bergamot peel, lavender, green notes.</p>
+    <p><strong>Notes:</strong> Lavender, Bergamot, Rosemary, and Sage.</p>
+    <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+  </div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Elaboratorium</h1>
+    <p>Our central workshop: where herbs, powders and tinctures are painstakingly mixed to create our bespoke scents. Come in, open drawers, lift dusty tomes from the shelves and wander among jars and flasks. Let the alchemy of the Elaboratorium awaken all your senses.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+/* ---- Body & background ---- */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'IM Fell English', 'Apple Chancery', cursive;
+  font-style: italic;
+  overflow: hidden;
+  color: #2e2a24;
+  position: relative;
+  background-color: #000;
+  transition: opacity 0.8s ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: black;
+  z-index: 9999;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 1.5s ease-in;
+}
+
+body.loaded::before {
+  opacity: 0;
+}
+
+body.fade-out::before {
+  opacity: 1;
+}
+
+/* ---- Navigation ribbon ---- */
+.nav-ribbon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: rgba(40,40,40,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding-top: env(safe-area-inset-top);
+  height: calc(48px + env(safe-area-inset-top));
+  z-index: 5000; /* add this line */
+}
+
+
+.nav-ribbon a {
+  text-decoration: none;
+  font-family: 'IM Fell English', 'Apple Chancery', cursive;
+  font-style: italic;
+  font-size: 1.2em;
+  color: #f2efe8;           /* warm parchment-white */
+  position: relative;        /* for underline pseudo-element */
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-ribbon a:hover {
+  opacity: 1;
+  border-bottom: 2px solid gold;
+}
+
+.nav-ribbon a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;              /* small gap below text */
+  width: 0;
+  height: 2px;
+  background: #d4af37;
+  transition: width 0.3s ease;
+}
+
+.nav-ribbon a:hover {
+  color: #ffffff;            /* bright white on hover */
+}
+
+.nav-ribbon a:hover::after {
+  width: 100%;               /* subtle gold underline */
+}
+
+
+/* ---- Overlay & Scroll ---- */
+.overlay {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.6);
+  display:flex; align-items:center; justify-content:center;
+  z-index:2000;
+}
+
+.scroll {
+  background: #fdf5e6;
+  border:8px solid #d4af37;
+  border-radius:10px;
+  padding:40px;
+  max-width:600px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 0 20px rgba(0,0,0,0.7);
+}
+
+.scroll h1 { margin-top:0; font-size:2em; }
+.scroll p { font-size:1.2em; margin:20px 0; }
+
+/* ---- Close buttons ---- */
+.close-btn {
+  position:absolute;
+  top:10px; right:10px;
+  background: radial-gradient(circle at center, #d4af37 0%, #c2972a 100%);
+  border:none; border-radius:50%;
+  width:38px; height:38px;
+  font-family:'IM Fell English', 'Apple Chancery', cursive;
+  font-style:italic; font-weight:bold; font-size:1.2em; line-height:38px;
+  text-align:center; color:white; cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3), inset 0 0 5px rgba(255,255,255,0.3);
+  z-index:1001;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
+  background: radial-gradient(circle at center, #c2972a 0%, #a17f1e 100%);
+}
+
+/* ---- Popups ---- */
+.popup {
+  display:none;
+  position:absolute;
+  top:20%; left:15%;
+  width:70%; max-width:600px;
+  padding:20px;
+  background: rgba(255,248,230,0.95);
+  border:8px solid #d4af37;
+  border-radius:10px;
+  box-shadow:0 0 15px rgba(0,0,0,0.3);
+  opacity:0; transition:opacity 0.4s ease;
+  z-index:2001;
+}
+
+.popup.show { display:block; opacity:1; }
+.popup h2, .popup p { text-align:center; font-style:italic; }
+
+/* ---- Hotspots ---- */
+.hotspot {
+  position:absolute; width:40px; height:40px;
+  border-radius:50%; background-color:rgba(255,55,55,0.5);
+  cursor:pointer; transition:background-color 0.3s; z-index:100;
+}
+
+.hotspot:hover { background-color: rgba(255,5,5,0.7); }
+.hotspot.selected { background-color: rgba(255,255,0,0.3); }
+
+/* ---- Tooltip ---- */
+#tooltip {
+  position:fixed; bottom:20px; left:50%;
+  transform:translateX(-50%);
+  padding:10px 15px; background:rgba(255,244,220,0.95);
+  border:1px solid rgba(160,120,80,0.8); border-radius:8px;
+  font-size:15px; font-family:'IM Fell English','Apple Chancery',cursive;
+  font-style:italic; color:#4a3620; pointer-events:none; display:none; z-index:10001;
+}
+
+/* ---- Room container ---- */
+.room-container {
+  position:relative; width:100%; max-width:1600px;
+  margin:0 auto; padding-top:56.25%; overflow:hidden;
+}
+
+.room-container img.room-bg {
+  position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain;
+}
+
+/* Portrait popup adjustment */
+@media (orientation: portrait) {
+  .overlay { align-items:center; justify-content:center; }
+  .popup { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); max-height:80vh; overflow-y:auto; }
+}
+
+/* Coarse pointer */
+@media (pointer: coarse) { .hotspot { width:52px; height:52px; } }

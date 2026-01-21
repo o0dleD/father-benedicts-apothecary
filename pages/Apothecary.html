@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&family=Cormorant:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary - Apothecary</title>
+
+<style>
+html { height: 100%; background-image: url("../Backgrnd_img/Mattioli.png"); background-size: cover; background-repeat: no-repeat; background-position: center; background-attachment: fixed; z-index: -3; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255,255,255,0.8); z-index: -2; pointer-events: none; }
+#fade-overlay { position: fixed; inset: 0; background: black; z-index: 9999; pointer-events: none; opacity: 1; transition: opacity 1.5s ease; }
+#fade-overlay.fade-out { opacity: 0; transition: opacity 1.5s ease; }
+body { font-family: 'IM Fell English', 'Apple Chancery', 'Cormorant', serif; font-style: italic; margin: 0; color: #272522; position: relative; z-index: 2; }
+
+.nav-ribbon { position: fixed; top: 0; left: 0; width: 100%; height: 48px; background: rgba(40,40,40,0.90); text-align: center; z-index: 3000; display: flex; align-items: center; justify-content: center; gap: 30px; }
+.nav-ribbon a {
+  text-decoration: none;
+  font-family: 'IM Fell English', 'Apple Chancery', cursive;
+  font-style: italic;
+  font-size: 1.2em;
+  color: #f2efe8;           /* warm parchment-white */
+  position: relative;        /* for underline pseudo-element */
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-ribbon a:hover {
+  opacity: 1;
+  border-bottom: 2px solid gold;
+}
+
+.nav-ribbon a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;              /* small gap below text */
+  width: 0;
+  height: 2px;
+  background: #d4af37;
+  transition: width 0.3s ease;
+}
+
+.nav-ribbon a:hover {
+  color: #ffffff;            /* bright white on hover */
+}
+
+.nav-ribbon a:hover::after {
+  width: 100%;               /* subtle gold underline */
+}
+.bottom-ribbon { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(40,40,40,0.90); height: 50px; display: flex; align-items: center; justify-content: center; z-index: 3000; }
+
+.cart-container { display: flex; align-items: center; gap: 8px; font-weight: bold; color: #f2efe8; cursor: pointer; position: relative; }
+.cart-icon { width: 24px; height: 24px; }
+.cart-count { color: #f2efe8; font-size: 1rem; font-weight: bold; min-width: 0; padding: 0; }
+
+#basket-panel { position: fixed; bottom: 50px; right: 1rem; width: 280px; max-height: 300px; padding: 1rem; background: rgba(255, 250, 240, 0.95); border: 4px solid #d4af37; border-radius: 12px; font-family: 'IM Fell English', serif; box-shadow: 0 4px 12px rgba(0,0,0,0.2); overflow-y: auto; z-index: 5000; display: none; }
+#basket-panel h3 { margin: 0 0 0.5rem 0; text-align: center; font-weight: 600; }
+#basket-items { list-style-type: none; padding-left: 0; margin: 0; }
+#basket-items li { margin-bottom: 0.3rem; display: flex; justify-content: space-between; align-items: center; }
+.remove-btn { margin-left: 8px; cursor: pointer; color: #d40000; font-weight: bold; border: none; background: none; }
+#basket-total { font-weight: bold; margin-top: 0.5rem; text-align: center; }
+#checkout-btn { display: block; width: 80%; margin: 0.5rem auto 0 auto; padding: 0.5rem; background: #d4af37; color: #272522; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; }
+
+.intro { position: sticky; top: 48px; z-index: 999; width: 100%; }
+.intro-inner { position: relative; background: rgba(255,255,255,0.8); padding: 2rem 1rem; border-bottom: 1px solid #eae7df; text-align: center; box-sizing: border-box; }
+.intro-inner::before { content: ""; position: absolute; inset: 0; background-image: url("../Backgrnd_img/Mattioli.png"); background-size: cover; background-repeat: no-repeat; background-position: center; opacity: 0.15; z-index: 1; pointer-events: none; }
+.intro-inner h1, .intro-inner p { position: relative; z-index: 2; margin: 0.2rem 0; color: #272522; }
+
+.grid-overlay { background: transparent; padding: 1rem 1rem 1rem 1rem; min-height: calc(100vh - 48px - 120px); z-index: 3; position: relative; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; z-index: 4; }
+
+.shop-intro {
+  max-width: 800px;
+  margin: 0 auto 0.5rem auto; /* smaller bottom margin */
+  text-align: center;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #2e2a24;
+}
+
+.room-container { text-align: center; margin-bottom: 2rem; }
+.mood-item { position: relative; border: 4px solid #d4af37; border-radius: 10px; background: rgba(255, 255, 255, 0.95); padding: 1rem; margin: 1rem auto; max-width: 360px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.mood-item:hover { transform: scale(1.03); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
+.mood-text { font-style: italic; color: #2e2a24; margin-bottom: 0.5rem; font-size: 0.95rem; }
+.mood-inspired-by { font-style: italic; font-size: 0.85rem; color: #3a3328; margin-bottom: 0.5rem; }
+.mood-caption { font-weight: 600; font-size: 0.9rem; color: #2e2a24; text-align: center; padding: 0.3rem 0; border-top: 1px solid #d4af37; }
+
+.room-name, .mood-hint { font-style: italic; letter-spacing: 0.2px; position: absolute; left: 0; width: 100%; padding: 6px 0; text-align: center; z-index: 2; }
+.room-name { margin-top: 0.6rem; font-size: 1.3rem; font-weight: 600; color: #2e2a24; text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.15); position: static; background: none; }
+.mood-hint { bottom: -100%; font-size: 1rem; background: linear-gradient(to top, rgba(255,255,255,0.9), rgba(255,255,255,0.5)); transition: bottom 0.3s ease; text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.15); }
+.mood-hint::before { content: ""; position: absolute; inset: 0; background: rgba(255,255,255,0.5); z-index: -1; }
+.mood-item:hover .mood-hint { bottom: 0; }
+.mood-name-inside { font-weight: 600; font-size: 1.2rem; margin-bottom: 0.5rem; color: #2e2a24; text-align: center; font-style: italic; }
+.room-caption { margin-top: 0.4rem; font-size: 0.9rem; color: #3a3328; }
+
+.credits, .shop-intro {
+  text-align: center;  /* centers all text inside these containers */
+}
+
+.credits {
+  padding: 1rem;
+  margin: 0;
+  text-align: center;   /* ← add this */
+}
+
+.footer {
+  padding: 1rem;
+  margin: 0;
+  text-align: center;   /* ← add this */
+}
+
+.mood-ambience {
+  font-style: italic;
+  font-size: 0.9rem;         /* slightly smaller than mood-name-inside */
+  color: #3a3328;            /* matches other subtext like mood-inspired-by */
+  margin-bottom: 0.5rem;     /* space below for description */
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; gap: 1rem; justify-items: center; }
+  .room-container { margin: 0.5rem 0; width: 100%; max-width: 360px; }
+  .mood-item { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div id="fade-overlay"></div>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+  <div class="bottom-ribbon">
+    <div class="cart-container" onclick="toggleBasketPanel()">
+      <span class="cart-text">Basket</span>
+      <img src="images/cart.png" alt="" class="cart-icon">
+      <span class="cart-count">0</span>
+    </div>
+  </div>
+
+  <div id="basket-panel">
+    <h3>Your Basket</h3>
+    <ul id="basket-items"></ul>
+    <div id="basket-total"></div>
+    <button id="checkout-btn" onclick="checkout()">Checkout</button>
+  </div>
+
+  <div class="intro">
+    <div class="intro-inner">
+      <h1>Father Benedict’s Apothecary</h1>
+      <p>Scents for the soul. Enter, explore, and breathe.</p>
+    </div>
+  </div>
+
+<div class="credits" style="padding: 4rem 1rem 0.5rem 1rem; margin: 0;">
+
+
+  <!-- All your credits content here -->
+
+<h2 style="font-size:1.5rem; font-weight:bold; text-align:center; margin-top:0.3rem; margin-bottom:1rem;">
+  Ready-Made Blends 
+</h2>
+
+<p>
+      This page lists the ready made, harmonious smells that are inspired by the different spaces encountered in the Monastery
+    </p>
+
+  </div>
+
+  <div class="grid-overlay">
+    <div class="grid">
+        
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 1', 15)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 1</div>
+<div class="mood-ambience">Ambience: Vitality</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Elaboratorium</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 2', 20)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 2</div>
+<div class="mood-ambience">Ambience: Inspiration</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Physic Garden</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 3', 35)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 3</div>
+<div class="mood-ambience">Ambience: Contemplation</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Cloister</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 4', 12)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 4</div>
+<div class="mood-ambience">Ambience: Creativity</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Scriptorium</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 5', 25)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 5</div>
+<div class="mood-ambience">Ambience: Ferality</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Woodland</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 6', 30)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 6</div>
+<div class="mood-ambience">Ambience: Reverie</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Cellarium</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 7', 15)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 7</div>
+<div class="mood-ambience">Ambience: Wonder</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Observatory</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 8', 17)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 8</div>
+<div class="mood-ambience">Ambience: Flow</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Riverbank</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 9', 18)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 9</div>
+<div class="mood-ambience">Ambience: Transformation</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Distillery</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 10', 95)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 10</div>
+<div class="mood-ambience">Ambience: Serenity</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Sanctuary</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 11', 10)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 11</div>
+<div class="mood-ambience">Ambience: Abundance</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Orchard</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+<div class="room-container">
+<div class="mood-item" onclick="addToBasket('Smell 12', 12)">
+<!-- Scent name inside the box -->
+<div class="mood-name-inside">Smell 12</div>
+<div class="mood-ambience">Ambience: Tranquility</div>
+<div class="mood-text">
+A bright, herbaceous aroma, uplifting and energising. Notes of mint, elemi, and citrus awaken the senses.
+</div>
+<div class="mood-inspired-by">Inspired by: Winter Cloister</div>
+<div class="mood-caption">Select this scent</div>
+</div>
+</div>
+
+    <!-- Additional content -->
+    <div class="extra-content">
+   <!--   <p>Additional content can go here; parchment remains softly visible beneath everything.</p> -->
+      <p class="footer">© 2026 Father Benedict’s Apothecary. All rights reserved.</p>
+    </div>
+
+
+
+<script>
+let basket = [];
+const cartCountEl = document.querySelector('.cart-count');
+const basketPanel = document.getElementById('basket-panel');
+const basketItemsEl = document.getElementById('basket-items');
+const basketTotalEl = document.getElementById('basket-total');
+
+function addToBasket(name, price = 0) {
+  const item = basket.find(i => i.name === name);
+  if (item) {
+    item.qty++;
+  } else {
+    basket.push({name, price, qty: 1});
+  }
+  updateBasketUI();
+  saveBasket();
+}
+
+function removeFromBasket(name) {
+  const itemIndex = basket.findIndex(i => i.name === name);
+  if (itemIndex > -1) {
+    basket[itemIndex].qty--;
+    if (basket[itemIndex].qty <= 0) {
+      basket.splice(itemIndex, 1);
+    }
+    updateBasketUI();
+    saveBasket();
+  }
+}
+
+function updateBasketUI() {
+  basketItemsEl.innerHTML = '';
+  let totalQty = 0;
+  let totalPrice = 0;
+  basket.forEach(item => {
+    totalQty += item.qty;
+    totalPrice += item.qty * item.price;
+
+    const li = document.createElement('li');
+    li.textContent = `${item.name} x${item.qty}`;
+
+    const removeBtn = document.createElement('button');
+    removeBtn.textContent = '×';
+    removeBtn.className = 'remove-btn';
+    removeBtn.onclick = (e) => { 
+      e.stopPropagation();
+      removeFromBasket(item.name);
+    };
+    li.appendChild(removeBtn);
+    basketItemsEl.appendChild(li);
+  });
+  cartCountEl.textContent = totalQty;
+  basketTotalEl.textContent = totalPrice > 0 ? `Total: $${totalPrice.toFixed(2)}` : '';
+}
+
+function toggleBasketPanel() {
+  basketPanel.style.display = basketPanel.style.display === 'block' ? 'none' : 'block';
+}
+
+function checkout() {
+  alert("Checkout clicked! Basket data can now be sent to server/payment provider.");
+  console.log("Basket data ready for payment:", basket);
+}
+
+function saveBasket() {
+  localStorage.setItem('basketItems', JSON.stringify(basket));
+}
+
+window.addEventListener('load', () => {
+  const savedBasket = JSON.parse(localStorage.getItem('basketItems') || '[]');
+  basket = savedBasket.map(i => ({...i}));
+  updateBasketUI();
+
+  const overlay = document.getElementById('fade-overlay');
+  overlay.classList.add('fade-out');
+  setTimeout(() => overlay.remove(), 1600);
+});
+</script>
+
+</body>
+</html>

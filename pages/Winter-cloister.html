@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Father Benedict’s Apothecary — Winter Cloister</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/Global_styles.css">
+</head>
+<body>
+
+ <!-- Navigation ribbon -->
+<div class="nav-ribbon">
+  <a href="index.html">Home</a>
+  <a href="About.html">About</a>  
+  <a href="Apothecary.html">Apothecary</a>
+  <a href="Create.html">Create</a>
+</div>
+
+<!-- Background audio -->
+<audio id="background-audio" loop>
+  <source src="../sounds/wintercloister.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hotspots inside aspect-ratio container -->
+<div class="room-container">
+  <img src="../Backgrnd_img/Winter_cloister.png" alt="Winter Cloister" class="room-bg">
+
+<div class="hotspot" style="top:70%; left:55%;" onclick="showPopup('FlagstonesPopup', this)"></div>
+<div class="hotspot" style="top:63%; left:30%;" onclick="showPopup('SnowyWallPopup', this)"></div>
+<div class="hotspot" style="top:31%; left:58%;" onclick="showPopup('IncensePopup', this)"></div>
+<div class="hotspot" style="top:50%; left:61%;" onclick="showPopup('ChapelDoorPopup', this)"></div>
+
+<!-- Popups -->
+<div id="FlagstonesPopup" class="popup">
+  <h2>Frosted Stone Walk</h2>
+  <p><em>Cold clarifies what warmth allows us to ignore.</em></p>
+  <p><strong>Aroma:</strong> Cold mineral air, icy stone, faint moss beneath frost.</p>
+  <p><strong>Notes:</strong> Vetiver, oakmoss, Pine, and Angelica Root.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="SnowyWallPopup" class="popup">
+  <h2>Snow-covered Wall</h2>
+  <p><em>Life waits, perfectly intact, beneath the white.</em></p>
+  <p><strong>Aroma:</strong> Frozen green stems, snow-damp air, distant herbs silenced by cold.</p>
+  <p><strong>Notes:</strong> Galbanum, Fir Needles, Sage, and Vetiver.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="IncensePopup" class="popup">
+  <h2>Incense in Cold Air</h2>
+  <p><em>Even smoke moves slowly in the cold.</em></p>
+  <p><strong>Aroma:</strong> Cool frankincense, dry smoke, breath fogging the stillness.</p>
+  <p><strong>Notes:</strong> Frankincense, elemi, Cade, and Angelica Seed.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+
+<div id="ChapelDoorPopup" class="popup">
+  <h2>Chapel Door</h2>
+  <p><em>Some thresholds open only after waiting.</em></p>
+  <p><strong>Aroma:</strong> Aged wood, frozen iron, faint warmth held deep within.</p>
+  <p><strong>Notes:</strong> Cedarwood, Myrrh, Oakwood, and Black Pepper.</p>
+  <button class="close-btn" onclick="closePopup(this.parentElement.id)">×</button>
+</div>
+</div>
+
+<!-- Entrance Overlay -->
+<div class="overlay" id="introOverlay">
+  <div class="scroll">
+    <button class="close-btn" onclick="closeOverlay()">×</button>
+    <h1>The Winter Cloister</h1>
+    <p>Snow drifts outside frost-lined arches, light sharp and silvery. Walk the quiet paths, hear the soft hush of winter air, and let the Winter Cloister bring clarity and calm.</p>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script src="../js/Global_js.js"></script>
+</body>
+</html>
