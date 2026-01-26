@@ -168,19 +168,117 @@ body.fade-out::before {
 
 /* ---- Room container ---- */
 .room-container {
-  position:relative; width:100%; max-width:1600px;
-  margin:0 auto; padding-top:56.25%; overflow:hidden;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
-.room-container img.room-bg {
-  position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain;
+.room-image-wrapper {
+  position: relative;
+  width: 100%;
 }
+
+.room-image-wrapper img.room-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.room-image-wrapper .hotspot {
+  position: absolute;
+  z-index: 100;
+}
+
 
 /* Portrait popup adjustment */
 @media (orientation: portrait) {
-  .overlay { align-items:center; justify-content:center; }
-  .popup { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); max-height:80vh; overflow-y:auto; }
+  /* Keep overlay centered */
+  .overlay { 
+    align-items: flex-start;   /* allow content to start below ribbon */
+    justify-content: center; 
+    padding-top: calc(56.25% + 48px + env(safe-area-inset-top)); /* same as before */
+  }
+
+  /* Popup below the image, scrollable if content is tall */
+  .popup { 
+    position: relative;        /* sit below image in normal flow */
+    top: 0;
+    left: 0;
+    transform: none;           /* remove fixed centering */
+    max-height: 80vh;          /* allow scrolling if needed */
+    overflow-y: auto;
+    width: 90%;                /* fit nicely on narrow screens */
+    margin: 20px auto;         /* spacing below image and center horizontally */
+  }
+
+  /* Room container stays the same */
+  .room-container {
+    padding-top: calc(56.25% + 48px + env(safe-area-inset-top)); /* push content below ribbon */
+  }
+
+  /* Image positioning stays the same */
+  .room-container img.room-bg {
+    top: 48px; /* same as ribbon height */
+  }
 }
+
+/* ---- Landscape screens ---- */
+@media (orientation: landscape) {
+
+  /* ---- Small / medium landscape screens (phones/tablets) ---- */
+  @media (max-width: 1023px) {
+
+    .room-container {
+      max-height: 100vh;
+      overflow-y: auto;
+      padding-top: calc(48px + env(safe-area-inset-top) + 10px);
+    }
+
+    .room-image-wrapper img.room-bg {
+      height: auto;
+      max-height: none;
+      display: block;
+    }
+
+    /* Hotspots stay absolute inside image */
+    .room-image-wrapper .hotspot {
+      position: absolute;
+      z-index: 100;
+    }
+
+    /* Do NOT touch .popup here — let JS handle it */
+    /* Remove any forced display, position tweaks, or pointer-events changes */
+  }
+
+  /* ---- Large screens / laptops / desktops ---- */
+  @media (min-width: 1024px) {
+    .room-image-wrapper {
+      position: relative;
+    }
+
+    .room-image-wrapper .hotspot {
+      position: absolute;
+      z-index: 100;
+    }
+
+    .popup {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-height: 80vh;
+      width: 60%;
+      overflow-y: auto;
+      display: none;
+      z-index: 2001;
+    }
+
+    .popup.show {
+      display: block;
+    }
+  }
+}
+
 
 /* Coarse pointer */
 @media (pointer: coarse) { .hotspot { width:52px; height:52px; } }
