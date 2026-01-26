@@ -256,8 +256,8 @@ body.fade-out::before {
       display: flex;
       align-items: flex-start; /* keep flex-start */
       justify-content: center;
-      overflow: visible;
-      height: 100vh;
+      overflow-y: auto;
+      max-height: 100vh;
       padding-top: 60px; /* push content down */
     }
 
@@ -286,7 +286,7 @@ body.fade-out::before {
 
     /* Scrollable content inside overlay */
     #introOverlay .scroll {
-      max-height: calc(90vh - (48px + env(safe-area-inset-top) + 20px));
+      max-height: 80vh;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       margin: 0 auto;           /* center horizontally */
