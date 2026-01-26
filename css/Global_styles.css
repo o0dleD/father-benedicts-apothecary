@@ -333,6 +333,35 @@ body.fade-out::before {
   }
 }
 
+/* ---- Opening popup adjustments ---- */
+.popup.opening-popup {
+  flex: 0 0 auto;            /* prevent flex stretching */
+  max-height: 60vh;          /* portrait: slightly shorter */
+  overflow-y: auto;          /* scroll if content exceeds max-height */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+  width: 85%;                /* same width as portrait hotspots */
+  margin: 20px auto;         /* center horizontally */
+}
+
+/* Landscape small/medium screens */
+@media (orientation: landscape) and (max-width: 1023px) {
+  .popup.opening-popup {
+    max-height: 80vh;        /* scrollable in landscape */
+    overflow-y: auto;
+    flex: 0 0 auto;
+    width: 90%;
+    margin: 10px;
+  }
+}
+
+/* Landscape large screens */
+@media (orientation: landscape) and (min-width: 1024px) {
+  .popup.opening-popup {
+    max-height: 80vh;        /* scrollable on large screens */
+    overflow-y: auto;
+    width: 60%;
+  }
+}
 
 /* Coarse pointer */
 @media (pointer: coarse) { .hotspot { width:52px; height:52px; } }
