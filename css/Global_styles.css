@@ -205,7 +205,8 @@ body.fade-out::before {
     top: 0;
     left: 0;
     transform: none;           /* remove fixed centering */
-    max-height: 50vh;          /* allow scrolling if needed */
+    max-height: 65vh;          /* allow scrolling if needed */
+    flex: 0 0 auto;
     overflow-y: auto;
     width: 85%;                /* fit nicely on narrow screens */
     margin: 20px auto;         /* spacing below image and center horizontally */
@@ -292,8 +293,10 @@ body.fade-out::before {
     }
 
     .popup {
+      
       max-height: 70vh;
       overflow-y: auto;
+    flex: 0 0 auto;
       -webkit-overflow-scrolling: touch;
     }
 
