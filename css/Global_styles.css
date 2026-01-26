@@ -205,9 +205,9 @@ body.fade-out::before {
     top: 0;
     left: 0;
     transform: none;           /* remove fixed centering */
-    max-height: 80vh;          /* allow scrolling if needed */
+    max-height: 65vh;          /* allow scrolling if needed */
     overflow-y: auto;
-    width: 90%;                /* fit nicely on narrow screens */
+    width: 85%;                /* fit nicely on narrow screens */
     margin: 20px auto;         /* spacing below image and center horizontally */
   }
 
@@ -252,13 +252,13 @@ body.fade-out::before {
 
     /* ---- Popups behave like portrait/desktop ---- */
     #introOverlay {
-display: flex;
-align-items: flex-start; /* keep flex-start */
-justify-content: center;
-overflow: visible;
-height: 100vh;
-padding-top: 60px; /* push content down */
-}
+      display: flex;
+      align-items: flex-start; /* keep flex-start */
+      justify-content: center;
+      overflow: visible;
+      height: 100vh;
+      padding-top: 60px; /* push content down */
+    }
 
     #introOverlay .popup {
       position: relative;        /* same as portrait */
@@ -290,6 +290,13 @@ padding-top: 60px; /* push content down */
       -webkit-overflow-scrolling: touch;
       margin: 0 auto;           /* center horizontally */
     }
+
+    .popup {
+      max-height: 70vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
   }
 
   /* ---- Large screens / laptops / desktops ---- */
