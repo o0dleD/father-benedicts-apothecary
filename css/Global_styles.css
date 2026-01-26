@@ -213,7 +213,7 @@ body.fade-out::before {
 
   /* Room container stays the same */
   .room-container {
-    padding-top: calc(56.25% + 48px + env(safe-area-inset-top)); /* push content below ribbon */
+  padding-top: calc(72px + env(safe-area-inset-top));
   }
 
   /* Image positioning stays the same */
@@ -228,26 +228,68 @@ body.fade-out::before {
   /* ---- Small / medium landscape screens (phones/tablets) ---- */
   @media (max-width: 1023px) {
 
+    /* Room container */
     .room-container {
       max-height: 100vh;
       overflow-y: auto;
-      padding-top: calc(48px + env(safe-area-inset-top) + 10px);
+      padding-top: 0; /* same as portrait for consistency */
     }
 
+    /* Room image */
     .room-image-wrapper img.room-bg {
+      position: relative; /* same as portrait/desktop */
+      top: 0px;           /* same as ribbon height, like portrait */
+      width: 100%;
       height: auto;
-      max-height: none;
       display: block;
     }
 
-    /* Hotspots stay absolute inside image */
+    /* Hotspots absolute inside image */
     .room-image-wrapper .hotspot {
       position: absolute;
       z-index: 100;
     }
 
-    /* Do NOT touch .popup here — let JS handle it */
-    /* Remove any forced display, position tweaks, or pointer-events changes */
+    /* ---- Popups behave like portrait/desktop ---- */
+    #introOverlay {
+display: flex;
+align-items: flex-start; /* keep flex-start */
+justify-content: center;
+overflow: visible;
+height: 100vh;
+padding-top: 60px; /* push content down */
+}
+
+    #introOverlay .popup {
+      position: relative;        /* same as portrait */
+      top: 10px;
+      left: 0;
+      transform: none;
+      max-height: 80vh;          /* scrollable if content is tall */
+      width: 90%;
+      overflow-y: auto;
+      display: none;             /* visibility controlled by JS */
+      z-index: 2001;
+      pointer-events: auto;      /* ensure clicks work */
+      margin: 10px;         /* horizontally center */
+    }
+
+    /* Close button inherits working behavior */
+    #introOverlay .popup .close-btn {
+      position: absolute;       /* same as portrait/desktop */
+      top: 10px;
+      right: 10px;
+      z-index: 2002;
+      pointer-events: auto;     /* ensure button works */
+    }
+
+    /* Scrollable content inside overlay */
+    #introOverlay .scroll {
+      max-height: calc(90vh - (48px + env(safe-area-inset-top) + 20px));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 auto;           /* center horizontally */
+    }
   }
 
   /* ---- Large screens / laptops / desktops ---- */
@@ -256,11 +298,13 @@ body.fade-out::before {
       position: relative;
     }
 
+    /* Hotspots absolute relative to image */
     .room-image-wrapper .hotspot {
       position: absolute;
       z-index: 100;
     }
 
+    /* Popup centered over image */
     .popup {
       position: absolute;
       top: 50%;
